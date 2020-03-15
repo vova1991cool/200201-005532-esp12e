@@ -11,8 +11,7 @@ GsmHendlerClass::GsmHendlerClass(uint8_t rxpin, uint8_t txpin,const char *phone,
 	recordID = _recordID;
 	this->begin(9600);
 	_myDelay(7000);
-	//_sendATCommand("ATE0");
-	//delay(500);
+	//_sendATCommand("ATE0"); //Need to be configure and save settings in GSM
 	char _status[50];
 	while (!strstr(_status, "+CPAS: 0"))
 	{
@@ -20,13 +19,10 @@ GsmHendlerClass::GsmHendlerClass(uint8_t rxpin, uint8_t txpin,const char *phone,
 		_sendATCommand("AT+CPAS", _status);
 		Serial.printf("CPAS: %s\n", _status);
 	}
-	//if(strcmp(_ussd, "") != 0) this->printf("AT+CUSD=0,\"%s\"\n", _ussd);
-//	_sendATCommand("AT+COLP=1");
-//	delay(500);
+//	_sendATCommand("AT+COLP=1"); //Need to be configure and save settings in GSM
 	_index = 0;
 	_myDelay(1000);
-//	_sendATCommand("AT&W");
-//	delay(500);
+//	_sendATCommand("AT&W"); //Need send to save configured settings
 	_startCall();
 }
 
@@ -48,7 +44,7 @@ void GsmHendlerClass::runAndCall(){
 void GsmHendlerClass::_commandsHendler(char* _data){
 	Serial.println(_data);
 	if(strstr(_data, "+COLP: ")){
-		Serial.printf("AT+CREC=4,\"C:\\User\\%d.amr\",0,90\n", recordID);
+	//	Serial.printf("AT+CREC=4,\"C:\\User\\%d.amr\",0,90\n", recordID);
 		this->printf("AT+CREC=4,\"C:\\User\\%d.amr\",0,90\n", recordID);
 	}else if(strstr(_data, "+CREC: 0")){
 		 this->println("ATH");

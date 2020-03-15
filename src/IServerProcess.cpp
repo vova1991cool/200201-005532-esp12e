@@ -53,7 +53,7 @@ void IServerProcessClass::init(JsonArray &_data)
 		Serial.println(IServerProcess.arg(0));
 		IServerProcess.send(200, "application/text", "ok");
 		char buffer[_dataSize];
-	    IServerProcess.arg(0).toCharArray(buffer, sizeof(buffer));
+	    IServerProcess.arg(0).toCharArray(buffer, _dataSize);
 		dataStruct.fromString(buffer);
 	});
 
