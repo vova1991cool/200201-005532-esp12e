@@ -16,7 +16,9 @@
 class GsmHendlerClass:public SoftwareSerial
 {
 private:
-	char phoneNum[PHONESIZE]; //Phone number field
+	char phoneNum[10][PHONESIZE]; //Phone number field
+	size_t phoneCount;
+	uint8_t _currentNum;
 	uint8_t recordID; //id of playing record field
 	char _buffer[100]; //buffer for recived commands
 	uint8_t _index; //index for placed command in buffer

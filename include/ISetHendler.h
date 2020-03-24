@@ -12,7 +12,7 @@
 #include <EEPROM.h>
 #include "ArduinoJson.h"
 
-#define DATA_SIZE 256
+#define DATA_SIZE 384
 /*SETTINGS ENUM*/
 enum dataIndexEnum{
 	MODE,

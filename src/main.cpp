@@ -30,7 +30,7 @@ void setup() {
 	Serial.println("Start!");
 
 	pinMode(RESET_PIN, INPUT);
-
+	
 	//dataStruct._setDeff();
 	dataStruct.init();
 
@@ -41,7 +41,7 @@ void setup() {
 
 	IServerProcess.init(_data);
 
-	handle_gsm = strcmp(_data.get<char*>(PHONE), "") != 0;
+	handle_gsm = strlen(_data.get<char*>(PHONE)) > 9;
 
 	if(handle_gsm) gsm = new GsmHendlerClass(_data.get<uint8_t>(GSM_TX),_data.get<uint8_t>(GSM_RX), _data.get<char*>(PHONE), _data.get<uint8_t>(REC_ID), _data.get<char*>(USSD));
 }
@@ -51,7 +51,7 @@ void loop() {
 	//Server clients hendler
 	IServerProcess.clientsHendler();
 	//Reset to def. pin hendler
-	if(!digitalRead(4)) dataStruct._setDeff();
+	if(!digitalRead(RESET_PIN)) dataStruct._setDeff();
 	//GSM calling hendler
 	if(handle_gsm) gsm->runAndCall();
 }

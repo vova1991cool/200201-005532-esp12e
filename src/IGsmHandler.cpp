@@ -5,9 +5,22 @@
 #include "IGsmHandler.h"
 
 GsmHendlerClass::GsmHendlerClass(uint8_t rxpin, uint8_t txpin,const char *phone, uint8_t _recordID, const char* _ussd):SoftwareSerial(txpin, rxpin){
-	strcpy(phoneNum, phone);
+	//strcpy(phoneNum, phone);
+	char tempStr[256];
+	size_t index = 0;
+	strcpy(tempStr, phone);
+	char *pch = strtok(tempStr, " ,;");
+	while (pch != NULL)
+	{
+		strcpy(phoneNum[index++], pch);
+		pch = strtok(NULL, " ,;");
+	}
+	phoneCount = --index;
+	Serial.printf("Count of phones: %d\n", phoneCount);
+	Serial.println(phoneNum[0]);
+	Serial.println(phoneNum[phoneCount]);
 	strcpy(ussd, _ussd);
-	Serial.printf("Current number is: %s\n", phoneNum);
+	Serial.printf("Current number is: %s\n", phoneNum[0]);
 	recordID = _recordID;
 	this->begin(9600);
 	_myDelay(7000);
@@ -54,8 +67,9 @@ void GsmHendlerClass::_commandsHendler(char* _data){
 }
 
 void GsmHendlerClass::_startCall(){
+	if(_currentNum > phoneCount) _currentNum = 0;
 	_myDelay(1500);
-	this->printf("ATD%s+38%s;\n", ussd, phoneNum);
+	this->printf("ATD%s+38%s;\n", ussd, phoneNum[_currentNum++]);
 }
 
 void GsmHendlerClass::_sendATCommand(const char* command, char* Dest){
