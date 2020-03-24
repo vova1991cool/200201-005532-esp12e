@@ -22,11 +22,7 @@ bool handle_gsm;
 GsmHendlerClass *gsm;
 
 void setup() {
-	Serial.begin(115200);
-	while (!Serial)
-	{
-		/* code */
-	}
+	Serial.begin(9600);
 	Serial.println("Start!");
 
 	pinMode(RESET_PIN, INPUT);
@@ -34,16 +30,16 @@ void setup() {
 	//dataStruct._setDeff();
 	dataStruct.init();
 
-	StaticJsonBuffer<DATA_SIZE> _buff;
+	StaticJsonBuffer<DATA_SIZE * 2> _buff;
 	char _dataBuff[DATA_SIZE];
 	strcpy(_dataBuff, dataStruct.data);
 	JsonArray &_data = _buff.parseArray(_dataBuff);
 
 	IServerProcess.init(_data);
 
-	handle_gsm = strlen(_data.get<char*>(PHONE)) > 9;
+	handle_gsm = _data[PHONE].measureLength() > 9;
 
-	if(handle_gsm) gsm = new GsmHendlerClass(_data.get<uint8_t>(GSM_TX),_data.get<uint8_t>(GSM_RX), _data.get<char*>(PHONE), _data.get<uint8_t>(REC_ID), _data.get<char*>(USSD));
+	if(handle_gsm) gsm = new GsmHendlerClass(_data[GSM_TX],_data[GSM_RX], _data[PHONE], _data[REC_ID], _data[USSD]);
 }
 
 // the loop function runs over and over again until power down or reset

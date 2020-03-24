@@ -6,7 +6,6 @@
 
 void IServerProcessClass::init(JsonArray &_data)
 {
-	
 	int indexMode = _data[MODE];
 	WiFi.mode(indexMode ? WIFI_STA:WIFI_AP);
 

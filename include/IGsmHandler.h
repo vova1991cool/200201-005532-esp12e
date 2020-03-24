@@ -11,7 +11,8 @@
 
 #include <SoftwareSerial.h>
 
-#define PHONESIZE 15
+#define PHONESIZE 12
+#define PHONES_DATA_SIZE 128
 
 class GsmHendlerClass:public SoftwareSerial
 {
@@ -31,6 +32,7 @@ private:
 	void _commandsHendler(char* _data); //method for parsing events
 
 	void _startCall(); //begin call current number
+	void _parseNumbersArr(const char *_data);
 
 public:
 	GsmHendlerClass(uint8_t rxpin, uint8_t txpin,const char *phone, uint8_t _recordID, const char* _ussd); //constructor

@@ -4,26 +4,17 @@
 
 #include "IGsmHandler.h"
 
-GsmHendlerClass::GsmHendlerClass(uint8_t rxpin, uint8_t txpin,const char *phone, uint8_t _recordID, const char* _ussd):SoftwareSerial(txpin, rxpin){
+GsmHendlerClass::GsmHendlerClass(uint8_t rxpin, uint8_t txpin, const char *phone, uint8_t _recordID, const char* _ussd):SoftwareSerial(txpin, rxpin){
 	//strcpy(phoneNum, phone);
-	char tempStr[256];
-	size_t index = 0;
-	strcpy(tempStr, phone);
-	char *pch = strtok(tempStr, " ,;");
-	while (pch != NULL)
-	{
-		strcpy(phoneNum[index++], pch);
-		pch = strtok(NULL, " ,;");
-	}
-	phoneCount = --index;
-	Serial.printf("Count of phones: %d\n", phoneCount);
-	Serial.println(phoneNum[0]);
-	Serial.println(phoneNum[phoneCount]);
-	strcpy(ussd, _ussd);
-	Serial.printf("Current number is: %s\n", phoneNum[0]);
-	recordID = _recordID;
 	this->begin(9600);
-	_myDelay(7000);
+	strcpy(ussd, _ussd);
+	recordID = _recordID;
+	phoneCount = 0;
+	_currentNum = 0;
+	_parseNumbersArr(phone);
+	Serial.printf("Current number is: %s\n", phoneNum[_currentNum]);
+	Serial.println("Waiting for GSM");
+	_myDelay(6000);
 	//_sendATCommand("ATE0"); //Need to be configure and save settings in GSM
 	char _status[50];
 	while (!strstr(_status, "+CPAS: 0"))
@@ -33,10 +24,21 @@ GsmHendlerClass::GsmHendlerClass(uint8_t rxpin, uint8_t txpin,const char *phone,
 		Serial.printf("CPAS: %s\n", _status);
 	}
 //	_sendATCommand("AT+COLP=1"); //Need to be configure and save settings in GSM
-	_index = 0;
-	_myDelay(1000);
+//	_myDelay(1000);
 //	_sendATCommand("AT&W"); //Need send to save configured settings
 	_startCall();
+}
+
+void GsmHendlerClass::_parseNumbersArr(const char *_data){
+	char tempStr[PHONES_DATA_SIZE];
+	strcpy(tempStr, _data);
+	char *pch = strtok(tempStr, " ,;");
+	while (pch != NULL)
+	{
+		strcpy(phoneNum[phoneCount++], pch);
+		pch = strtok(NULL, " ,;");
+	}
+	--phoneCount;
 }
 
 void GsmHendlerClass::runAndCall(){
@@ -95,5 +97,5 @@ void GsmHendlerClass::_waitCommandsExec(uint32 _time){
 
 void GsmHendlerClass::_myDelay(uint32 _delay){
 	unsigned long _timeout = millis() + _delay;
-	while (millis() < _timeout){ delay(15); }
+	while (millis() < _timeout){ delay(10); }
 }
