@@ -14,12 +14,12 @@ void MyDataBox::init()
 
 void MyDataBox::fromString(char* source){
 	Serial.println(source);
-	StaticJsonBuffer<DATA_SIZE * 2> _buffer;
+	DynamicJsonBuffer _buffer;
 	_commit(_buffer.parseArray(source));
 }
 
 void MyDataBox::_setDeff() {
-	StaticJsonBuffer<DATA_SIZE * 2> _buff;
+	DynamicJsonBuffer _buff;
 	_commit(_buff.parseArray("[0,\"ESP8266Default\",\"\",\"192.168.1.1\",\"192.168.1.1\",12,14,\"\",0,\"\"]"));
 }
 

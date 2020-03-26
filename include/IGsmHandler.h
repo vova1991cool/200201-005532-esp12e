@@ -21,7 +21,7 @@ private:
 	size_t phoneCount;
 	uint8_t _currentNum;
 	uint8_t recordID; //id of playing record field
-	char _buffer[100]; //buffer for recived commands
+	char _buffer[150]; //buffer for recived commands
 	uint8_t _index; //index for placed command in buffer
 	char ussd[10];
 
@@ -41,4 +41,3 @@ public:
 };
 
 #endif
-

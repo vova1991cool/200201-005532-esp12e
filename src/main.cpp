@@ -22,7 +22,7 @@ bool handle_gsm;
 GsmHendlerClass *gsm;
 
 void setup() {
-	Serial.begin(9600);
+	Serial.begin(115200);
 	Serial.println("Start!");
 
 	pinMode(RESET_PIN, INPUT);
@@ -30,7 +30,7 @@ void setup() {
 	//dataStruct._setDeff();
 	dataStruct.init();
 
-	StaticJsonBuffer<DATA_SIZE * 2> _buff;
+	DynamicJsonBuffer _buff;
 	char _dataBuff[DATA_SIZE];
 	strcpy(_dataBuff, dataStruct.data);
 	JsonArray &_data = _buff.parseArray(_dataBuff);
