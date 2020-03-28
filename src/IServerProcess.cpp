@@ -43,8 +43,8 @@ void IServerProcessClass::init(JsonArray &_data)
 
 	on(F("/getData"), HTTP_GET, []() {
 		Serial.print(F("Sending data to client: "));
-		Serial.println(dataStruct.data);
-		IServerProcess.send(200, "application/json", dataStruct.data);
+		Serial.println(dataStruct._getDataToParse());
+		IServerProcess.send(200, "application/json", dataStruct._getDataToParse());
 	});
 
 	on("/saveData", HTTP_POST, []() {

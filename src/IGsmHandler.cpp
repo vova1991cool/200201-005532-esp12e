@@ -6,8 +6,6 @@
 
 GsmHendlerClass::GsmHendlerClass(uint8_t rxpin, uint8_t txpin, const char *phone, uint8_t _recordID, const char* _ussd):SoftwareSerial(txpin, rxpin){
 	//strcpy(phoneNum, phone);
-	Serial.println("Waiting for GSM");
-	delay(6000);
 	strcpy(ussd, _ussd);
 	recordID = _recordID;
 	phoneCount = 0;
@@ -17,18 +15,12 @@ GsmHendlerClass::GsmHendlerClass(uint8_t rxpin, uint8_t txpin, const char *phone
 	Serial.printf("Current number is: %s\n", phoneNum[_currentNum]);
 	Serial.printf("Last number is: %s\n", phoneNum[phoneCount]);
 	this->begin(9600);
-	//_sendATCommand("ATE0"); //Need to be configure and save settings in GSM
-	_buffer[0] = '\0';
-	while (!strstr(_buffer, "+CPAS: 0"))
-	{
-		delay(2000);
-		_sendATCommand("AT+CPAS", _buffer);
-		Serial.printf("CPAS: %s\n", _buffer);
-	}
-//	_sendATCommand("AT+COLP=1"); //Need to be configure and save settings in GSM
-	//delay(2000);
-//	_sendATCommand("AT&W"); //Need send to save configured settings
+	Serial.println("Waiting for GSM");
+	_myDelay(10000);
 	_startCall();
+	//_sendATCommand("ATE0"); //Need to be configure and save settings in GSM
+//	_sendATCommand("AT+COLP=1"); //Need to be configure and save settings in GSM
+//	_sendATCommand("AT&W"); //Need send to save configured settings
 }
 
 void GsmHendlerClass::_parseNumbersArr(const char *_data){
@@ -80,7 +72,7 @@ void GsmHendlerClass::_sendATCommand(const char* command, char* Dest){
 	Serial.println(command);
 	this->println(command);
 
-	_waitCommandsExec(3000);
+	_waitCommandsExec(2000);
 
 	uint8_t index = 0;
 	if(this->available()){
@@ -99,5 +91,5 @@ void GsmHendlerClass::_waitCommandsExec(uint32 _time){
 
 void GsmHendlerClass::_myDelay(uint32 _delay){
 	unsigned long _timeout = millis() + _delay;
-	while (millis() < _timeout){ delay(15); }
+	while (millis() < _timeout){ delay(1); }
 }

@@ -30,6 +30,8 @@ enum dataIndexEnum{
 
 struct MyDataBox
 	{
+		const char *_getDataToParse() { return data; };
+
 		char data[DATA_SIZE]; //global settings buffer
 
 		void fromString(char* source); //parcing from string and place to EEPROM

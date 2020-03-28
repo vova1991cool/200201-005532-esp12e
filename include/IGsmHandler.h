@@ -21,14 +21,13 @@ private:
 	size_t phoneCount;
 	uint8_t _currentNum;
 	uint8_t recordID; //id of playing record field
-	char _buffer[150]; //buffer for recived commands
+	char _buffer[100]; //buffer for recived commands
 	uint8_t _index; //index for placed command in buffer
 	char ussd[10];
 
 	void _waitCommandsExec(uint32 _time); //commands result waiting method
 	void _myDelay(uint32 _delay); //delay with millis(dont stop controller)
 
-	void _sendATCommand(const char* command, char* _respDest); //method for sending commands and waiting result(can be deleted)
 	void _commandsHendler(char* _data); //method for parsing events
 
 	void _startCall(); //begin call current number
@@ -37,6 +36,7 @@ private:
 public:
 	GsmHendlerClass(uint8_t rxpin, uint8_t txpin,const char *phone, uint8_t _recordID, const char* _ussd); //constructor
 	void runAndCall(); //loop method for exec
+	void _sendATCommand(const char* command, char* _respDest); //method for sending commands and waiting result
 
 };
 
