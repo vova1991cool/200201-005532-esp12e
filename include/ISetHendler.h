@@ -12,6 +12,8 @@
 #include <EEPROM.h>
 #include "ArduinoJson.h"
 
+/*[0,"dsfgdgs","234235","192.168.1.1","255.255.255.0",1,1,"0965622167",0,"#31#"]*/
+
 #define DATA_SIZE 256
 
 /*SETTINGS ENUM*/

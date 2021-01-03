@@ -1,130 +1,162 @@
-<html lang='en'>
-<head>
-    <meta http-equiv='Content-Type' content='text/html'>
-    <script>setTimeout( 'location="#option0";', 0 );</script>
-    <title>Esp8266GSM Settings</title>
-    <style>
-        body {
-            background-color:#8DA1BF;
-            color:#4B5056;
+<html>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Esp8266GSM Settings</title>
+<style>
+    body{
+        background-color: #8DA1BF;
+        margin: 0;
+    }
+    .w3-sidebar {
+        height: 100%;
+        width: 20%;
+        background-color: #fff;
+        position: fixed !important;
+        z-index: 1;
+        overflow: auto;
+        display: inherit;
+    }
+    .w3-bar-block .w3-dropdown-hover .w3-bar-block .w3-dropdown-click .w3-dropdown-content {
+        min-width: 100%
+    }
+    .w3-bar-block .w3-dropdown-hover .w3-button, .w3-bar-block .w3-dropdown-click .w3-button {
+        width: 100%;
+        text-align: left;
+        padding: 8px 16px
+    }
+    .w3-black {
+        color: #fff !important;
+        background-color: #66738d !important
+    }
+    .w3-bar-block .w3-bar-item {
+        width: 100%;
+        display: block;
+        padding: 8px 16px;
+        text-align: left;
+        border: none;
+        white-space: normal;
+        float: none;
+        outline: 0
+    }
+    .w3-bar-block.w3-center .w3-bar-item {
+        text-align: center
+    }
+    .w3-card, .w3-card-2 {
+        box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12)
+    }
+    .w3-bar .w3-bar-item {
+        padding: 8px 16px;
+        float: left;
+        width: auto;
+        border: none;
+        display: block;
+        outline: 0
+    }
+    .w3-button {
+        border: none;
+        display: inline-block;
+        padding: 8px 16px;
+        vertical-align: middle;
+        overflow: hidden;
+        text-decoration: none;
+        color: inherit;
+        background-color: inherit;
+        text-align: center;
+        cursor: pointer;
+        white-space: nowrap
+    }
+    .w3-button:hover {
+        color: #000 !important;
+        background-color: #ccc !important
+    }
+    .w3-button:disabled {
+        cursor: not-allowed;
+        opacity: 0.3
+    }
+    .w3-container:after, .w3-container:before {
+        content: \"\";
+        display: table;
+        clear: both
+    }
+    .w3-container {
+        padding: 0.01em 16px;
+        background-color: #8DA1BF;
+        display: table;
+    }
+    .w3-animate-opacity {
+        animation: opac 0.5s
+    }
+    @keyframes opac {
+        from {
+            opacity: 0
         }
-        .tabs {
-            position: relative;
-            margin: 0;
-            padding: 15px;
-            font-size: 0
+        to {
+            opacity: 1
         }
-        .tabs li {
-            display: inline-block;
-            margin-right: 1px;
-            list-style-type: none;
-            font-size: 16px
-        }
-        .tabs li:last-child {
-            margin-right: 0
-        }
-        .tabs li a {
-            display: block;
-            padding: 10px 15px;
-            background: #8DA1BF;
-            text-decoration: none;
-            color: #4b5056;
-            transition: background .5s ease
-        }
-        .tabs a + div {
-            position: absolute;
-            left: 0;
-            height: 0;
-            padding: 0 15px;
-            overflow: hidden
-        }
-        .tabs :target a {
-            background: #afcae8;
-        }
-        .tabs :target a + div {
-            height: 100%;
-            overflow: visible
-        }
-        .textField {
-            box-shadow: inset 0 1px 3px rgba(0, 0, 0, 2);
-            border: 1px solid #ccc;
-            color: #007e19;
-            width: 10em;
-            font-weight: bold;
-            background-color: #8DA1BF;
-            display: block;
-            margin: 1px 0 5px 0;
-        }
-        label {
-            font-size: 16px;
-            display: block;
-        }
-        td {
-            padding: 30px;
-            width: 10em;
-        }
-        .btns {
-            background-color: #8DA1BF;
-            border: none;
-            color: #4B5056;
-            padding: 10px 50px;
-            text-align: center;
-            text-decoration: none;
-            display: inline-block;
-            font-weight: bold;
-            font-size: 18px;
-            -webkit-transition-duration: 0.4s; /* Safari */
-            transition-duration: 0.3s;
-            cursor: pointer;
-            position: absolute;
-        }
-        .btns:hover {
-            background-color: #afcae8;
-            color: #4B5056;
-        }
-        @media (max-width: 768px) {
-            .tabs a {
-                width: 100%
-            }
-            .tabs a + div {
-                position: static;
-                float: left
-            }
-            .tabs li {
-                display: block;
-                overflow: hidden;
-                margin: 0 0 1px
-            }
-        }
-    </style>
-</head>
+    }
+    .w3-red, .w3-hover-red:hover {
+        color: #fff !important;
+        background-color: #f44336 !important
+    }
+    .textField {
+        box-shadow: inset 0 2px 4px rgba(0, 0, 0, 1);
+        border: 3px ridge #ccc;
+        border-radius: 40px;
+        font-size: 20px;
+        color: #007e19;
+        width: 10em;
+        font-weight: bold;
+        background-color: #8DA1BF;
+        display: block;
+        margin: 1px 0 5px 0;
+        padding: 5px;
+    }
+    label {
+        font-size: 16px;
+        display: block;
+    }
+    td {
+        padding: 30px;
+        width: 10em;
+        display: inherit;
+        vertical-align: inherit;
+    }
+    .btns {
+        background-color: #8DA1BF;
+        border: none;
+        color: #4B5056;
+        margin-top: 30px;
+        padding: 10px 50px;
+        text-align: center;
+        display: inline-block;
+        font-weight: bold;
+        font-size: 18px;
+        -webkit-transition-duration: 0.4s; /* Safari */
+        transition-duration: 0.3s;
+    }
+    .btns:hover {
+        background-color: #afcae8;
+        color: #4B5056;
+    }
+</style>
 <body>
-<div class='main'>
-    <ul class='tabs'>
-        <li id='option0'>
-            <a href='#option0'><b>Network Settings</b></a>
-            <div id='tab1'>
-                <form action='/network'></form>
-            </div>
-        </li>
-        <li id='option1'>
-            <a href='#option1'><b>GSM connection settings</b></a>
-            <div>
-                <form action='/conn'></form>
-            </div>
-        </li>
-        <li id='option2'>
-            <a href='#option2'><b>GSM Settings</b></a>
-            <div id='tab2'>
-                <form action='/network'></form>
-            </div>
-        </li>
-    </ul>
+<div class='w3-sidebar w3-bar-block w3-black w3-card' style='width:20%'>
+    <h5 class='w3-bar-item' style="width: 80%">Esp8266GSM Settings</h5>
+    <button class='w3-bar-item w3-button tablink' onclick="openLink(event, 'netSet')"><b>Network Settings</b></button>
+    <button class='w3-bar-item w3-button tablink' onclick="openLink(event, 'gsmSet')"><b>GSM connection settings</b></button>
+    <button class='w3-bar-item w3-button tablink' onclick="openLink(event, 'callSet')"><b>Calling Settings</b></button>
+</div>
+<div style='margin-left:20%'>
+    <div id='netSet' class='w3-container tab w3-animate-opacity' style='display:none'>
+    </div>
+    <div id='gsmSet' class='w3-container tab w3-animate-opacity' style='display:none'>
+    </div>
+    <div id='callSet' class='w3-container tab w3-animate-opacity' style='display:none'>
+    </div>
 </div>
 <script>
     let data = {
-        arr:['Mode','Ssid','Pass','Host','Recive','Transmit','Phone','Voice'],
-        contSrt:[1,4,6,8],
+        arr:['Mode','Ssid','Pass','Host','Gateway','Recive','Transmit','Phone','Voice','USSD'],
+        contSrt:[1,5,7,10],
         load:function () {
             fetch('/getData').then(function (response) {
                 if (response.status !== 200) {
@@ -138,16 +170,15 @@
                 })
             });
         },
-        json:[0, "ESP8266Default", "", "192.168.4.1", 12, 14, "0965622167", 0],
         send:function(){
             if(!('json' in data)) return;
             let switchFunc = function(it, i){
                 switch (i) {
                     case 0:
                         return document.getElementsByName(it)[0].selectedIndex;
-                    case 4:
                     case 5:
-                    case 7:
+                    case 6:
+                    case 8:
                         return parseInt(document.getElementsByName(it)[0].value);
                     default:
                         return document.getElementsByName(it)[0].value;
@@ -162,34 +193,48 @@
                 alert('Settings send!');
             })
         },
-
         prepPage:function (json) {
-            Array.prototype.slice.call(document.getElementsByTagName('form')).forEach(function (item, i) {
+            Array.prototype.slice.call(document.getElementsByClassName('tab')).forEach(function (item, i) {
                 let table = document.createElement('table');
                 let options = json[0] ? '<option>AP</option><option selected>Station</option>':'<option selected>AP</option><option>Station</option>';
-                let td = table.appendChild(document.createElement('td'));
+                let tr =  table.appendChild(document.createElement('tr'));
+                let td = tr.appendChild(document.createElement('td'));
                 for (let ind = data.contSrt[i]; ind < data.contSrt[i + 1]; ind++){
                     let lb = data.arr[ind];
                     let val = json[data.arr.indexOf(lb)];
                     td.insertAdjacentHTML('beforeend', lb + ':<input class=\'textField\' name=\'' + lb + '\' type=\'text\' value=\'' + val + '\'>');
                 }
-                if (i == 0) td.insertAdjacentHTML('afterbegin', data.arr[i] + ':<select name=\'' + data.arr[i] + '\' class="textField">' + options + '</select>');
-                td = table.appendChild(document.createElement('td'));
-                item.append(table);
-                item.insertAdjacentHTML('beforeend', (function(){
-                    let buttonsData = ['Save','Reset','left','right', 'data.send()', 'document.location.reload(true)'];
+                if (i == 0) td.insertAdjacentHTML('afterbegin', data.arr[i] + ':<select name=\'' + data.arr[i] + '\' class=\"textField\">' + options + '</select>');
+               // td = table.appendChild(document.createElement('td'));
+                td.insertAdjacentHTML('beforeend', (function(){
+                    let buttonsData = ['Save','Reset','data.send()', 'document.location.reload(true)'];
                     let btnTag = '';
                     for (let i = 0; i < 2; i++){
-                        btnTag += '<input type=\'button\' class=\'btns\' value=\'' + buttonsData[i] + '\' onclick=\'' + buttonsData[4 + i] + '\' style=\'' + buttonsData[2 + i] + ': 60px\'>';
+                        btnTag += '<input type=\'button\' class=\'btns\' value=\'' + buttonsData[i] + '\' onclick=\'' + buttonsData[2 + i] + '\'>';
                     }
                     btnTag += '</div>';
                     return '<div>' + btnTag;
                 })());
+                item.append(table);
             });
         }
     };
-   // data.load();
-      data.prepPage(data.json);
+    data.json = [0,"dsfgdgs","234235","192.168.1.1","255.255.255.0",1,1,"0965622167",0,"#31#"];
+    //data.load();
+    data.prepPage(data.json);
+    function openLink(evt, animName) {
+        var i, x, tablinks;
+        x = document.getElementsByClassName('tab');
+        for (i = 0; i < x.length; i++) {
+            x[i].style.display = 'none';
+        }
+        tablinks = document.getElementsByClassName('tablink');
+        for (i = 0; i < x.length; i++) {
+            tablinks[i].className = tablinks[i].className.replace(' w3-red', '');
+        }
+        document.getElementById(animName).style.display = 'block';
+        evt.currentTarget.className += ' w3-red';
+    }
 </script>
 </body>
 </html>
